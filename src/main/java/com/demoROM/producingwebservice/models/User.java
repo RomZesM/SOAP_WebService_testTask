@@ -1,9 +1,6 @@
 package com.demoROM.producingwebservice.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 @Entity
 @Table(name = "users")
@@ -16,8 +13,13 @@ public class User {
 	@Column(name = "password")
 	private String password;
 
-
-	//public List<UserRole> userRoleList;
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(
+			name = "user_role",
+			joinColumns = @JoinColumn(name = "login"),
+			inverseJoinColumns = @JoinColumn(name = "id")
+	)
+	public List<UserRole> userRoleList;
 
 		public User(){
 
@@ -27,7 +29,7 @@ public class User {
 		this.name = name;
 		this.login = login;
 		this.password = password;
-		//this.userRoleList = userRoleList;
+		this.userRoleList = userRoleList;
 	}
 
 
@@ -55,13 +57,14 @@ public class User {
 		this.password = password;
 	}
 
-//	public List<UserRole> getUserRoleList() {
-//		return userRoleList;
-//	}
-//
-//	public void setUserRoleList(List<UserRole> userRoleList) {
-//		this.userRoleList = userRoleList;
-//	}
+	public List<UserRole> getUserRoleList() {
+		return userRoleList;
+	}
+
+
+	public void setUserRoleList(List<UserRole> userRoleList) {
+		this.userRoleList = userRoleList;
+	}
 
 	@Override
 	public String toString() {
@@ -69,6 +72,7 @@ public class User {
 				"name='" + name + '\'' +
 				", login='" + login + '\'' +
 				", password='" + password + '\'' +
+				", userRoleList=" + userRoleList +
 				'}';
 	}
 }

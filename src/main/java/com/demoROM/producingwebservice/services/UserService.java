@@ -27,19 +27,24 @@ public class UserService {
 
 	@PostConstruct
 	public void testDataInit(){
-		this.user = new User("Bib", "logogo", "passs", new ArrayList<>(List.of(new UserRole(1, "admin"))));
+		List<UserRole> userRoleTestList = new ArrayList<>();
+		userRoleTestList.add(new UserRole(2, "user"));
+		this.user = new User("Bib", "logogo4", "passs", userRoleTestList);
 
 		this.userInfo = new UserInfo();
 		userInfo.setName(user.getName());
 		userInfo.setLogin(user.getLogin());
 		userInfo.setPassword(user.getPassword());
 
-		System.out.println("Try dataBase:-------");
 
-		List<User> userList = userRepository.findAll();
-		System.out.println(userList);
-		List<UserRole> roleList = userRoleService.getAllRoles();
-		System.out.println(roleList);
+//		System.out.println("Try dataBase:-------");
+//
+//		List<User> userList = userRepository.findAll();
+//		System.out.println(userList);
+//		List<UserRole> roleList = userRoleService.getAllRoles();
+//		System.out.println(roleList);
+//		userRepository.save(user);
+
 
 	} //todo del
 
@@ -47,5 +52,16 @@ public class UserService {
 	public UserInfo findUser(String name) {
 		//Assert.notNull(name, "The country's name must not be null");
 		return userInfo;
+	}
+
+	public User testUser(String name) {
+		//Assert.notNull(name, "The country's name must not be null");
+		return user;
+	}
+
+	public void save(User user) {
+		userRepository.save(user);
+		//Assert.notNull(name, "The country's name must not be null");
+
 	}
 }

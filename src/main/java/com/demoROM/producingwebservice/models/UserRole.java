@@ -1,6 +1,8 @@
 package com.demoROM.producingwebservice.models;
 
 import javax.persistence.*;
+import java.util.List;
+import com.demoROM.producingwebservice.models.User;
 
 @Entity
 @Table(name = "roles")
@@ -13,12 +15,16 @@ public class UserRole {
 	@Column(name = "role_name")
 	public String roleName;
 
+	@ManyToMany(mappedBy = "userRoleList")
+	public List<User> userList;
+
 	public UserRole() {
 	}
 
 	public UserRole(int id, String role) {
 		this.id = id;
 		this.roleName = role;
+
 	}
 
 	public int getId() {
@@ -37,6 +43,14 @@ public class UserRole {
 		this.roleName = role;
 
 			}
+
+	public List<User> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
 
 	@Override
 	public String toString() {

@@ -2,6 +2,7 @@ package com.demoROM.producingwebservice;
 
 
 
+import com.demoROM.producingwebservice.models.User;
 import com.demoROM.producingwebservice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -28,6 +29,13 @@ public class UserEndpoint {
 	public GetUserResponse getUser(@RequestPayload GetUserRequest request) {
 			GetUserResponse response = new GetUserResponse();
 
+		//------------------------------------------------------------------
+		System.out.println("Testing user: ");
+		User testUser = userService.testUser("yy");
+		System.out.println(testUser);
+		userService.save(testUser);
+
+		//------------------------------------------------------------------
 
 		//response.setUser(userRepository.findUser(request.getName()));
 
