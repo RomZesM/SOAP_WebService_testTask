@@ -14,18 +14,20 @@ import java.util.List;
 @Service
 public class UserService {
 
+	private UserRoleService userRoleService;
 	private UserRepository userRepository;
 	private UserInfo userInfo;
 	private User user;
 
 	@Autowired
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, UserRoleService userRoleService) {
 		this.userRepository = userRepository;
+		this.userRoleService = userRoleService;
 	}
 
 	@PostConstruct
 	public void testDataInit(){
-		this.user = new User("Bib", "logogog", "passs", new ArrayList<>(List.of(new UserRole(1, "admin"))));
+		this.user = new User("Bib", "logogo", "passs", new ArrayList<>(List.of(new UserRole(1, "admin"))));
 
 		this.userInfo = new UserInfo();
 		userInfo.setName(user.getName());
@@ -34,9 +36,10 @@ public class UserService {
 
 		System.out.println("Try dataBase:-------");
 
-		List<User> list = userRepository.findAll();
-		System.out.println(list.size());
-		System.out.println(list);
+		List<User> userList = userRepository.findAll();
+		System.out.println(userList);
+		List<UserRole> roleList = userRoleService.getAllRoles();
+		System.out.println(roleList);
 
 	} //todo del
 
