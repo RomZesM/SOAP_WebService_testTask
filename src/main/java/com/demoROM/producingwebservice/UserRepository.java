@@ -10,13 +10,19 @@ import javax.annotation.PostConstruct;
 @Component
 public class UserRepository {
 	private User user;
+	private UserDTO userDTO;
 
 	@PostConstruct
 	public void testDataInit(){
+		this.userDTO = new UserDTO("Bib", "logogog", "passs");
+
+
 		this.user = new User();
-		user.setName("Bob");
-		user.setLogin("BobCat");
-		user.setPassword("pa777word");
+		user.setName(userDTO.getName());
+		user.setLogin(userDTO.getLogin());
+		user.setPassword(userDTO.getPassword());
+
+
 	} //todo del
 
 
@@ -24,7 +30,6 @@ public class UserRepository {
 
 	public User findUser(String name) {
 		//Assert.notNull(name, "The country's name must not be null");
-		System.out.println("Name in user repo: " + name);
 		return user;
 	}
 

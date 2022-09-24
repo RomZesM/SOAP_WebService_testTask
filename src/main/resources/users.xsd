@@ -14,7 +14,15 @@
     <xs:element name="getUserResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="user" type="tns:user"/>
+                <xs:element name="user" type="tns:user" maxOccurs="2"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="succesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="success" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

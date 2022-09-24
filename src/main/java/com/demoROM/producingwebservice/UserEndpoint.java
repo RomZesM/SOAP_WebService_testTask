@@ -1,5 +1,7 @@
 package com.demoROM.producingwebservice;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -8,6 +10,10 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import io.spring.guides.gs_producing_web_service.GetUserRequest;
 import io.spring.guides.gs_producing_web_service.GetUserResponse;
+import io.spring.guides.gs_producing_web_service.SuccesResponse;
+import io.spring.guides.gs_producing_web_service.User;
+
+
 
 
 @Endpoint
@@ -24,15 +30,19 @@ public class UserEndpoint {
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserRequest")
 	@ResponsePayload
 	public GetUserResponse getUser(@RequestPayload GetUserRequest request) {
-		GetUserResponse response = new GetUserResponse();
+			GetUserResponse response = new GetUserResponse();
 
-		System.out.println(request.getName());
-		System.out.println(request.getLogin());
 
-		System.out.println(request.getPassword());
+		//response.setUser(userRepository.findUser(request.getName()));
 
-		response.setUser(userRepository.findUser(request.getName()));
+		//add some user into list into UserResponce
+		response.getUser().add(userRepository.findUser(request.getName()));
+		response.getUser().add(userRepository.findUser(request.getName()));
+
 
 		return response;
 	}
+
+
+
 }
