@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -62,6 +63,21 @@ public class UserService {
 	public void save(User user) {
 		userRepository.save(user);
 		//Assert.notNull(name, "The country's name must not be null");
+	}
 
+	public List<UserInfo> getUsersList(){
+		List<UserInfo> userInfoList = new ArrayList<>();
+		for (User user : userRepository.findAll()){
+			userInfoList.add(convertUserToUserInfo(user));
+		}
+		 return userInfoList;
+	}
+
+	public UserInfo convertUserToUserInfo(User user){
+		UserInfo userInf = new UserInfo();
+		userInf.setName(user.getName());
+		userInf.setLogin(user.getLogin());
+		userInf.setPassword(user.getPassword());
+		return userInf;
 	}
 }

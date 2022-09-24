@@ -4,14 +4,14 @@ package com.demoROM.producingwebservice;
 
 import com.demoROM.producingwebservice.models.User;
 import com.demoROM.producingwebservice.services.UserService;
+import io.spring.guides.gs_producing_web_service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import io.spring.guides.gs_producing_web_service.GetUserRequest;
-import io.spring.guides.gs_producing_web_service.GetUserResponse;
+import java.util.List;
 
 
 @Endpoint
@@ -40,13 +40,24 @@ public class UserEndpoint {
 		//response.setUser(userRepository.findUser(request.getName()));
 
 		//add some user into list into UserResponce
-		response.getUser().add(userService.findUser(request.getName()));
-		response.getUser().add(userService.findUser(request.getName()));
+		//response.setUser(userService.findUser(request.getName()));
+
 
 
 		return response;
 	}
 
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUsersListRequest")
+	@ResponsePayload
+	public GetUsersListResponse getUsersList(@RequestPayload GetUsersListRequest request) {
+		GetUsersListResponse response = new GetUsersListResponse();
+
+		List<UserInfo> usersList = userService.getUsersList();
+		for(UserInfo userInfo : usersList){
+			response.getUser().add(userInfo);
+		}
+		return response;
+	}
 
 
 }
