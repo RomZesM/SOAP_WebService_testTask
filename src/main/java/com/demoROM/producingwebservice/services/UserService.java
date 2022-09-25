@@ -4,6 +4,8 @@ import com.demoROM.producingwebservice.models.User;
 import com.demoROM.producingwebservice.models.UserRole;
 import com.demoROM.producingwebservice.repositories.UserRepository;
 import io.spring.guides.gs_producing_web_service.UserInfo;
+import io.spring.guides.gs_producing_web_service.UserInfoRole;
+import io.spring.guides.gs_producing_web_service.UserRoleInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +19,6 @@ public class UserService {
 
 	private UserRoleService userRoleService;
 	private UserRepository userRepository;
-	private UserInfo userInfo;
-	private User user;
 
 	@Autowired
 	public UserService(UserRepository userRepository, UserRoleService userRoleService) {
@@ -26,40 +26,13 @@ public class UserService {
 		this.userRoleService = userRoleService;
 	}
 
-	@PostConstruct
-	public void testDataInit(){
-		List<UserRole> userRoleTestList = new ArrayList<>();
-		userRoleTestList.add(new UserRole(2, "user"));
-		this.user = new User("Bib", "logogo4", "passs", userRoleTestList);
 
-		this.userInfo = new UserInfo();
-		userInfo.setName(user.getName());
-		userInfo.setLogin(user.getLogin());
-		userInfo.setPassword(user.getPassword());
-
-
-//		System.out.println("Try dataBase:-------");
-//
-//		List<User> userList = userRepository.findAll();
-//		System.out.println(userList);
-//		List<UserRole> roleList = userRoleService.getAllRoles();
-//		System.out.println(roleList);
-//		userRepository.save(user);
-
-
-	} //todo del
-
-
-	public UserInfo findUser(String login) {
-		UserInfo userInfo = convertUserToUserInfo(userRepository.findByLogin(login));
+	public UserInfoRole findUser(String login) {
+		UserInfoRole userInfoRole = convertUserToUserInfoRole(userRepository.findByLogin(login));
 		//Assert.notNull(name, "The country's name must not be null");
-		return userInfo;
+		return userInfoRole;
 	}
 
-	public User testUser(String name) {
-		//Assert.notNull(name, "The country's name must not be null");
-		return user;
-	}
 
 	public void save(User user) {
 		userRepository.save(user);
@@ -79,6 +52,21 @@ public class UserService {
 		userInf.setName(user.getName());
 		userInf.setLogin(user.getLogin());
 		userInf.setPassword(user.getPassword());
+		return userInf;
+	}
+
+	public UserInfoRole convertUserToUserInfoRole(User user){
+		UserInfoRole userInf = new UserInfoRole();
+		userInf.setName(user.getName());
+		userInf.setLogin(user.getLogin());
+		userInf.setPassword(user.getPassword());
+
+		for(UserRole role : user.userRoleList){
+			UserRoleInfo userRoleInfo = new UserRoleInfo(); //todo refactor???
+			userRoleInfo.setRole(role.getRoleName());
+			userInf.getRoles().add(userRoleInfo);
+		}
+
 		return userInf;
 	}
 }

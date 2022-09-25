@@ -30,10 +30,10 @@ public class UserEndpoint {
 			GetUserResponse response = new GetUserResponse();
 
 		//------------------------------------------------------------------
-		System.out.println("Testing user: ");
-		User testUser = userService.testUser("yy");
-		System.out.println(testUser);
-		userService.save(testUser);
+//		System.out.println("Testing user: ");
+//		User testUser = userService.testUser("yy");
+//		System.out.println(testUser);
+//		userService.save(testUser);
 
 		//------------------------------------------------------------------
 

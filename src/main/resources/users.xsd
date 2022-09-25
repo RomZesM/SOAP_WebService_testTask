@@ -6,7 +6,6 @@
             <xs:sequence>
                 <xs:element name="name" type="xs:string"/>
                 <xs:element name="login" type="xs:string"/>
-                <xs:element name="password" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -14,7 +13,7 @@
     <xs:element name="getUserResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="user" type="tns:userInfo"/>
+                <xs:element name="user" type="tns:userInfoRole"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -54,6 +53,21 @@
             <xs:element name="login" type="xs:string"/>
             <xs:element name="password" type="xs:string"/>
             </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="userInfoRole">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="login" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+            <xs:element name="roles" type="tns:userRoleInfo" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="userRoleInfo">
+        <xs:sequence>
+            <xs:element name="role" type="xs:string"/>
+        </xs:sequence>
     </xs:complexType>
 
 </xs:schema>
