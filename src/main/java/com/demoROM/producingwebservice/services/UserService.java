@@ -50,7 +50,8 @@ public class UserService {
 	} //todo del
 
 
-	public UserInfo findUser(String name) {
+	public UserInfo findUser(String login) {
+		UserInfo userInfo = convertUserToUserInfo(userRepository.findByLogin(login));
 		//Assert.notNull(name, "The country's name must not be null");
 		return userInfo;
 	}

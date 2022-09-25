@@ -37,13 +37,8 @@ public class UserEndpoint {
 
 		//------------------------------------------------------------------
 
-		//response.setUser(userRepository.findUser(request.getName()));
-
-		//add some user into list into UserResponce
-		//response.setUser(userService.findUser(request.getName()));
-
-
-
+		System.out.println("Test user: " + userService.findUser(request.getLogin()));
+		response.setUser(userService.findUser(request.getLogin()));
 		return response;
 	}
 
