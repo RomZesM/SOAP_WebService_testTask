@@ -61,10 +61,9 @@ public class UserEndpoint {
 	@ResponsePayload
 	public DefaultResponse addUser(@RequestPayload AddUserRequest request) {
 		DefaultResponse response = new DefaultResponse();
-		//========
-		if(requestValidator.validate(request).size() != 0)
+		if(requestValidator.validateAddUserRequest(request).size() != 0)
 		{
-			List<String> errors = requestValidator.validate(request);
+			List<String> errors = requestValidator.validateAddUserRequest(request);
 
 			for(String string : errors ){
 				ErrorMessage errorMessage = new ErrorMessage();
@@ -74,9 +73,6 @@ public class UserEndpoint {
 			response.setSuccess("false");
 			return response;
 		}
-		//========
-
-
 
 		userService.save(request);
 
@@ -89,6 +85,18 @@ public class UserEndpoint {
 	public DefaultResponse updateUser(@RequestPayload UpdateUserRequest request) {
 		DefaultResponse response = new DefaultResponse();
 
+		if(requestValidator.validateUpdateUserRequest(request).size() != 0)
+		{
+			List<String> errors = requestValidator.validateUpdateUserRequest(request);
+
+			for(String string : errors ){
+				ErrorMessage errorMessage = new ErrorMessage();
+				errorMessage.setMessage(string);
+				response.getErrors().add(errorMessage);
+			}
+			response.setSuccess("false");
+			return response;
+		}
 		userService.update(request);
 
 		response.setSuccess("true");
