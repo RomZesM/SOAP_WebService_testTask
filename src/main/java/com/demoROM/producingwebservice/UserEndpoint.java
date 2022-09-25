@@ -28,16 +28,6 @@ public class UserEndpoint {
 	@ResponsePayload
 	public GetUserResponse getUser(@RequestPayload GetUserRequest request) {
 			GetUserResponse response = new GetUserResponse();
-
-		//------------------------------------------------------------------
-//		System.out.println("Testing user: ");
-//		User testUser = userService.testUser("yy");
-//		System.out.println(testUser);
-//		userService.save(testUser);
-
-		//------------------------------------------------------------------
-
-		System.out.println("Test user: " + userService.findUser(request.getLogin()));
 		response.setUser(userService.findUser(request.getLogin()));
 		return response;
 	}
@@ -53,6 +43,16 @@ public class UserEndpoint {
 		}
 		return response;
 	}
+
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "delUserRequest")
+	@ResponsePayload
+	public DefaultResponse deleteUser(@RequestPayload DelUserRequest request) {
+		DefaultResponse response = new DefaultResponse();
+		userService.delete(request.getLogin());
+		response.setSuccess("true");
+		return response;
+	}
+
 
 
 }

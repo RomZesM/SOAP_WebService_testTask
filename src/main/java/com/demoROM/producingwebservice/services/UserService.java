@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +38,11 @@ public class UserService {
 	public void save(User user) {
 		userRepository.save(user);
 		//Assert.notNull(name, "The country's name must not be null");
+	}
+
+	public void delete(String login) {
+		userRepository.deleteById(login);
+			//Assert.notNull(name, "The country's name must not be null"); //todo: do i need this?
 	}
 
 	public List<UserInfo> getUsersList(){

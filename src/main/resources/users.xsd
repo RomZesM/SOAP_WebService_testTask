@@ -36,16 +36,23 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="succesResponse">
+    <xs:element name="delUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="login" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="defaultResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="success" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-
-
-
 
     <xs:complexType name="userInfo">
         <xs:sequence>
