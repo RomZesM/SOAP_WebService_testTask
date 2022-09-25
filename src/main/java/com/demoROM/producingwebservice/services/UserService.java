@@ -26,7 +26,6 @@ public class UserService {
 
 	public UserInfoPlusRole findUser(String login) {
 		UserInfoPlusRole userInfoRole = convertUserToUserInfoPlusRole(userRepository.findByLogin(login));
-		//Assert.notNull(name, "The country's name must not be null");
 		return userInfoRole;
 	}
 
