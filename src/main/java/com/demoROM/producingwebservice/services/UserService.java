@@ -3,8 +3,10 @@ package com.demoROM.producingwebservice.services;
 import com.demoROM.producingwebservice.models.User;
 import com.demoROM.producingwebservice.models.UserRole;
 import com.demoROM.producingwebservice.repositories.UserRepository;
+import io.spring.guides.gs_producing_web_service.AddUserRequest;
 import io.spring.guides.gs_producing_web_service.UserInfo;
-import io.spring.guides.gs_producing_web_service.UserInfoRole;
+import io.spring.guides.gs_producing_web_service.UserInfoPlusRole;
+
 import io.spring.guides.gs_producing_web_service.UserRoleInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,14 +30,25 @@ public class UserService {
 	}
 
 
-	public UserInfoRole findUser(String login) {
-		UserInfoRole userInfoRole = convertUserToUserInfoRole(userRepository.findByLogin(login));
+	public UserInfoPlusRole findUser(String login) {
+		UserInfoPlusRole userInfoRole = convertUserToUserInfoPlusRole(userRepository.findByLogin(login));
 		//Assert.notNull(name, "The country's name must not be null");
 		return userInfoRole;
 	}
 
 
-	public void save(User user) {
+	public void save(AddUserRequest request) {
+
+		User user = new User();
+		user.setName(request.getNewUser().getName());
+		user.setLogin(request.getNewUser().getLogin());
+		user.setPassword(request.getNewUser().getPassword());
+		List<UserRole> roleList = new ArrayList<>();
+		for(UserRoleInfo role : request.getNewUser().getRoles()){
+			roleList.add(new UserRole(role.getRole()));
+		}
+		user.setUserRoleList(roleList);
+
 		userRepository.save(user);
 		//Assert.notNull(name, "The country's name must not be null");
 	}
@@ -61,8 +74,8 @@ public class UserService {
 		return userInf;
 	}
 
-	public UserInfoRole convertUserToUserInfoRole(User user){
-		UserInfoRole userInf = new UserInfoRole();
+	public UserInfoPlusRole convertUserToUserInfoPlusRole(User user){
+		UserInfoPlusRole userInf = new UserInfoPlusRole();
 		userInf.setName(user.getName());
 		userInf.setLogin(user.getLogin());
 		userInf.setPassword(user.getPassword());

@@ -53,6 +53,17 @@ public class UserEndpoint {
 		return response;
 	}
 
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "addUserRequest")
+	@ResponsePayload
+	public DefaultResponse addUser(@RequestPayload AddUserRequest request) {
+		DefaultResponse response = new DefaultResponse();
+
+		userService.save(request);
+
+		response.setSuccess("true");
+		return response;
+	}
+
 
 
 }
