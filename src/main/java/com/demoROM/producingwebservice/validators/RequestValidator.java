@@ -21,6 +21,10 @@ public class RequestValidator {
 		if(request.getNewUser().getPassword().equals("")){
 			errorsList.add("PASSWORD is empty");
 		}
+		if(!(request.getNewUser().getPassword().equals(""))){
+			if(!request.getNewUser().getPassword().matches("(?=.*[A-Z])(?=.*[0-9]).*$"))
+					errorsList.add("PASSWORD must contain at least one number and une uppercase letter");
+		}
 
 		return errorsList;
 	}
