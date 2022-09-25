@@ -3,11 +3,8 @@ package com.demoROM.producingwebservice.services;
 import com.demoROM.producingwebservice.models.User;
 import com.demoROM.producingwebservice.models.UserRole;
 import com.demoROM.producingwebservice.repositories.UserRepository;
-import io.spring.guides.gs_producing_web_service.AddUserRequest;
-import io.spring.guides.gs_producing_web_service.UserInfo;
-import io.spring.guides.gs_producing_web_service.UserInfoPlusRole;
+import io.spring.guides.gs_producing_web_service.*;
 
-import io.spring.guides.gs_producing_web_service.UserRoleInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +47,27 @@ public class UserService {
 		user.setUserRoleList(roleList);
 
 		userRepository.save(user);
+		//Assert.notNull(name, "The country's name must not be null");
+	}
+
+	public void update(UpdateUserRequest request) {
+
+		User user = userRepository.findByLogin(request.getUpdateUser().getLogin());
+
+		if(user != null){
+			user.setName(request.getUpdateUser().getName());
+			//user.setLogin(request.getUpdateUser().getLogin()); //todo: do we need tochange user login -> primary key
+			user.setPassword(request.getUpdateUser().getPassword());
+			List<UserRole> roleList = new ArrayList<>();
+			if(request.getUpdateUser().getRoles().size() != 0){
+				for(UserRoleInfo role : request.getUpdateUser().getRoles()){
+					roleList.add(new UserRole(role.getRole()));
+				}
+				user.setUserRoleList(roleList);
+			}
+			userRepository.save(user);
+		}
+
 		//Assert.notNull(name, "The country's name must not be null");
 	}
 

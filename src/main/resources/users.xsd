@@ -53,6 +53,14 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="updateUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="updateUser" type="tns:userInfoPlusRole"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="defaultResponse">
         <xs:complexType>
             <xs:sequence>

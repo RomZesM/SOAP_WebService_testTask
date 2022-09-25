@@ -64,6 +64,16 @@ public class UserEndpoint {
 		return response;
 	}
 
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateUserRequest")
+	@ResponsePayload
+	public DefaultResponse updateUser(@RequestPayload UpdateUserRequest request) {
+		DefaultResponse response = new DefaultResponse();
+
+		userService.update(request);
+
+		response.setSuccess("true");
+		return response;
+	}
 
 
 }
