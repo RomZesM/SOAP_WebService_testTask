@@ -1,10 +1,14 @@
 package com.demoROM.producingwebservice.models;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
+@Valid
 @Entity
 @Table(name = "users")
 public class User {
+	@NotBlank(message = "Do not be empty")
 	@Column(name = "name")
 	private String name;
 	@Id

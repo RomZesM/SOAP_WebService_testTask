@@ -8,11 +8,8 @@ import io.spring.guides.gs_producing_web_service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -56,7 +53,7 @@ public class UserService {
 
 		if(user != null){
 			user.setName(request.getUpdateUser().getName());
-			//user.setLogin(request.getUpdateUser().getLogin()); //todo: do we need to change user login -> primary key??
+			user.setLogin(request.getUpdateUser().getLogin()); //todo: do we need to change user login -> primary key??
 			user.setPassword(request.getUpdateUser().getPassword());
 			List<UserRole> roleList = new ArrayList<>();
 			if(request.getUpdateUser().getRoles().size() != 0){
@@ -65,6 +62,9 @@ public class UserService {
 				}
 				user.setUserRoleList(roleList);
 			}
+
+
+
 			userRepository.save(user);
 		}
 

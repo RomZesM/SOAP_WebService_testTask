@@ -4,6 +4,7 @@ package com.demoROM.producingwebservice;
 
 import com.demoROM.producingwebservice.models.User;
 import com.demoROM.producingwebservice.services.UserService;
+import com.demoROM.producingwebservice.validators.RequestValidator;
 import io.spring.guides.gs_producing_web_service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -19,9 +20,12 @@ public class UserEndpoint {
 	private static final String NAMESPACE_URI = "http://spring.io/guides/gs-producing-web-service";
 
 	private UserService userService;
+	private RequestValidator requestValidator;
+
 	@Autowired
-	public UserEndpoint(UserService userService) {
+	public UserEndpoint(UserService userService, RequestValidator requestValidator) {
 		this.userService = userService;
+		this.requestValidator = requestValidator;
 	}
 
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserRequest")
@@ -57,6 +61,22 @@ public class UserEndpoint {
 	@ResponsePayload
 	public DefaultResponse addUser(@RequestPayload AddUserRequest request) {
 		DefaultResponse response = new DefaultResponse();
+		//========
+		if(requestValidator.validate(request).size() != 0)
+		{
+			List<String> errors = requestValidator.validate(request);
+
+			for(String string : errors ){
+				ErrorMessage errorMessage = new ErrorMessage();
+				errorMessage.setMessage(string);
+				response.getErrors().add(errorMessage);
+			}
+			response.setSuccess("false");
+			return response;
+		}
+		//========
+
+
 
 		userService.save(request);
 
