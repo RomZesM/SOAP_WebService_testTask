@@ -42,7 +42,7 @@ public class UserService {
 		user.setPassword(request.getNewUser().getPassword());
 		List<UserRole> roleList = new ArrayList<>();
 		for(UserRoleInfo role : request.getNewUser().getRoles()){
-			roleList.add(new UserRole(role.getRole()));
+			roleList.add(userRoleService.findRole(role.getRole())); //todo add null check, create new if 0;
 		}
 		user.setUserRoleList(roleList);
 
@@ -56,12 +56,12 @@ public class UserService {
 
 		if(user != null){
 			user.setName(request.getUpdateUser().getName());
-			//user.setLogin(request.getUpdateUser().getLogin()); //todo: do we need tochange user login -> primary key
+			//user.setLogin(request.getUpdateUser().getLogin()); //todo: do we need to change user login -> primary key??
 			user.setPassword(request.getUpdateUser().getPassword());
 			List<UserRole> roleList = new ArrayList<>();
 			if(request.getUpdateUser().getRoles().size() != 0){
 				for(UserRoleInfo role : request.getUpdateUser().getRoles()){
-					roleList.add(new UserRole(role.getRole()));
+					roleList.add(userRoleService.findRole(role.getRole())); //todo add null check, create new if 0;
 				}
 				user.setUserRoleList(roleList);
 			}

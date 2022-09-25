@@ -20,4 +20,8 @@ public class UserRoleService {
 	public List<UserRole> getAllRoles() {
 		return userRoleRepository.findAll();
 	}
+
+	public UserRole findRole(String roleName){
+		return userRoleRepository.findByRoleName(roleName);
+	}
 }
